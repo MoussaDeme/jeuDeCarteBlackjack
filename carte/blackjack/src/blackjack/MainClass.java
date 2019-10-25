@@ -5,8 +5,6 @@
  */
 package blackjack;
 
-//import cartes.Carte;
-
 import cartes.Carte;
 
 
@@ -14,7 +12,7 @@ import cartes.Carte;
  *
  * @author 21912873
  */
-public class Main {
+public class MainClass {
     public static void main(String[] args)
     {
         Carte c5 = new Carte("blackJack", "pique");

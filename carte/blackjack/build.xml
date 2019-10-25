@@ -98,8 +98,8 @@
         <!-- Create application JAR file -->
         <jar jarfile="${dist.home}/${app.fullname}.jar" basedir="${build.home}">
             <manifest>
-                <attribute name="Main-Class" value="blackjack.Main"/>
-                <attribute name="Class-Path" value="cartes-0.1.jar" />
+                <attribute name="Main-Class" value="blackjack.MainClass"/>
+                <attribute name="Class-Path" value="lib/cartes-0.1.jar" />
             </manifest>
         </jar>
     </target>
