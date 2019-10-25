@@ -7,7 +7,7 @@ package cartes;
 
 /**
  *
- * @author 21912873
+ * @author 21814195
  */
 public class Carte {
    private String valeur;
