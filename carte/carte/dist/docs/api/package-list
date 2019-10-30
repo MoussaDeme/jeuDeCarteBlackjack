@@ -1,5 +1,5 @@
-cartes.controleur
-cartes.gui
-cartes.model
-cartes.util
-cartes.vue
+controleur
+gui
+model
+util
+vue

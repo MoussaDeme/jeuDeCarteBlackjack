@@ -21,9 +21,14 @@ public class MainClass {
       // System.out.println(c1.toString());
        
       // Paquet p = new Paquet();
-      GUI gui = new GUI();
+     GUI gui = new GUI();
         //AbstractPaquetEcoutable  p = PaquetFactory.createPaquet(32);
         
-        
+        //PaquetFactory fact = new PaquetFactory();
+        /*Paquet p = PaquetFactory.createPaquet(52);
+        System.out.println(p.getListeCarte().size());
+        for(int i=0; i<p.getListeCarte().size(); i++){
+            System.out.println(p.getListeCarte().get(i).toString());
+        }*/
     }
 }

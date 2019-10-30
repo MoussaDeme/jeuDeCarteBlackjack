@@ -5,7 +5,6 @@
  */
 package blackjack;
 
-import cartes.model.Carte;
 
 
 /**

@@ -28,9 +28,7 @@ import javax.swing.JTextArea;
  * @author Pc
  */
     public class GUI extends JFrame implements EcouteurPaquet, MouseListener{
-    private String[] valeur ={"2", "3", "4", "5", "6", "7", "8", "9", "10", "VALET", "DAME", "ROI", "AS"};
-    private String[] couleur ={"PIQUE", "COEUR", "CARREAU", "TREFLE"};
-   
+    
     public GUI(){
        JFrame fen = new JFrame("BlackJack");
        // Graphics g = new Rectangle(20, 30);
@@ -40,8 +38,7 @@ import javax.swing.JTextArea;
         
         
         VuePaquet pioche = new VuePaquetCache(PaquetFactory.createPaquet(52));
-        
-        /**
+         /*
          * Crée un paquet initialement vide 
          * 0 ne signifie pas que le paquet a une taille de 0 mais plutôt vide
          * (Voir dans la classe PquetFactory
@@ -49,25 +46,26 @@ import javax.swing.JTextArea;
         VuePaquet main = new VuePaquetVisible(PaquetFactory.createPaquet(0));
         VuePaquet defausse = new VuePaquetVisible(PaquetFactory.createPaquet(0));
         double k = 5;
-        int cpt=0;
-        for(int i=0; i<this.valeur.length; i++){
+    
+        
+        /*for(int i=0; i<pioche.getP().getListeCarte().size(); i++){
            
                 /**
                  * Création des 52 cartes pour la pioche
                  */
-               for(int j=0; j<this.couleur.length; j++){
-                   Carte c = new Carte(this.valeur[i], this.couleur[j]);
                     //pioche.getP().addCardFin(c);
-                   Canvas canvas = new Canvas(k, k);
-                 //  canvas.add(c);
-                   pioche.getP().addCardFin(c);
-                   //pioche.getP().getListeCarte().set(i*j, c);
-                   pioche.getP().setCarte(c, cpt);
-                   fen.getContentPane().add(canvas);
-                   k+=5;
-                   cpt+=1;
+                   Canvas canvas = new Canvas(0, 0);
+                   Canvas can = new Canvas(50,50);
+                 //canvas.add(c);
+                  
+                  
+                    
+                 fen.getContentPane().add(canvas);
+                 fen.getContentPane().add(can);
+                  // k+=5;
+                  
                    //this.paintComponent(g);           
-               }
+              //}
                /* pioche.getP().addCardFin(new Carte(this.valeur[i], this.couleur[0]));
                 fen.getContentPane().add(new Canvas());
                 pioche.getP().addCardFin(new Carte(this.valeur[i], this.couleur[1]));
@@ -76,9 +74,9 @@ import javax.swing.JTextArea;
                 fen.getContentPane().add(new Canvas());
                 pioche.getP().addCardFin(new Carte(this.valeur[i], this.couleur[3]));
                 fen.getContentPane().add(new Canvas());*/
-        }
+        //}
         
-        System.out.println(pioche.getP().getListeCarte().size());
+        //System.out.println(pioche.getP().getListeCarte().size());
         
        // pioche.getP().melanger();
         
@@ -98,7 +96,7 @@ import javax.swing.JTextArea;
          }
     }*/
     
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(MouseEvent e){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

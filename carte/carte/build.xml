@@ -98,7 +98,7 @@
         <!-- Create application JAR file -->
         <jar jarfile="${dist.home}/${app.fullname}.jar" basedir="${build.home}">
             <manifest>
-              <attribute name="Main-Class" value="cartes.model.MainClass"/>
+              <attribute name="Main-Class" value="model.MainClass"/>
               
                 <attribute name="Class-Path" value="cartes-0.1.jar" />
             </manifest>
