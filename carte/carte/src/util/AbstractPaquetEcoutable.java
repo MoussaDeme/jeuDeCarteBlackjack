@@ -15,7 +15,11 @@ import java.util.List;
  */
 public abstract class AbstractPaquetEcoutable implements PaquetEcoutable
 {
-    private List<EcouteurPaquet> ecouteur = new ArrayList<EcouteurPaquet>();
+    private List<EcouteurPaquet> ecouteur;
+    
+    public AbstractPaquetEcoutable(){
+        this.ecouteur  = new ArrayList<EcouteurPaquet>();
+    }
     
     public void ajoutEcouteur(EcouteurPaquet e){
         this.ecouteur.add(e);

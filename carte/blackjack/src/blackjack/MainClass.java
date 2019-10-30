@@ -5,7 +5,7 @@
  */
 package blackjack;
 
-import cartes.Carte;
+import cartes.model.Carte;
 
 
 /**
@@ -15,8 +15,8 @@ import cartes.Carte;
 public class MainClass {
     public static void main(String[] args)
     {
-        Carte c5 = new Carte("blackJack", "pique");
-        System.out.println(c5.toString());
+        //Carte c5 = new Carte("blackJack", "pique");
+        //System.out.println(c5.toString());
         
     }
 }

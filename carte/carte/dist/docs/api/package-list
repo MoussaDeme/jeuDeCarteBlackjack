@@ -1,4 +1,5 @@
-cartes
 cartes.controleur
+cartes.gui
+cartes.model
+cartes.util
 cartes.vue
-util
