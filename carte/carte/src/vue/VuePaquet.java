@@ -5,6 +5,11 @@
  */
 package vue;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import javax.swing.JPanel;
 import model.Paquet;
 import util.EcouteurPaquet;
 
@@ -12,22 +17,28 @@ import util.EcouteurPaquet;
  *
  * @author Pc
  */
-public abstract class VuePaquet implements EcouteurPaquet{
-    private Paquet p;
+public abstract class VuePaquet extends JPanel implements EcouteurPaquet {
+
+    protected Paquet p;
+
     public VuePaquet(Paquet p) {
         this.p = p;
+
+        p.ajoutEcouteur(this);
     }
 
     @Override
-    public void paquetMiseAJour(Object p) {
-       Paquet p1 = (Paquet)p;
-       for(int i=0; i<p1.getListeCarte().size(); i++){
-           System.out.println(p1.getListeCarte().get(i).toString());
-       }
+    public void paquetMiseAJour(Object o) {
+        
+        repaint();
        
-      System.out.println(p1.getListeCarte().size());
     }
+        
+
     public Paquet getP(){
-          return this.p;
+        return this.p;
     }
+
+   
+
 }

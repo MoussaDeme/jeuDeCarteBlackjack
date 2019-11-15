@@ -5,7 +5,7 @@
  */
 package model;
 
-import gui.GUI;
+import vue.GUI;
 import util.AbstractPaquetEcoutable;
 
 /**
@@ -16,19 +16,8 @@ public class MainClass {
       
     public static void main(String[] args)
     {
-      // Carte c1 = new Carte("as", "pique");
-      // Carte c2 = new Carte("Carreau", "valCarreau");
-      // System.out.println(c1.toString());
-       
-      // Paquet p = new Paquet();
-     GUI gui = new GUI();
-        //AbstractPaquetEcoutable  p = PaquetFactory.createPaquet(32);
         
-        //PaquetFactory fact = new PaquetFactory();
-        /*Paquet p = PaquetFactory.createPaquet(52);
-        System.out.println(p.getListeCarte().size());
-        for(int i=0; i<p.getListeCarte().size(); i++){
-            System.out.println(p.getListeCarte().get(i).toString());
-        }*/
+     GUI gui = new GUI();
+     
     }
 }

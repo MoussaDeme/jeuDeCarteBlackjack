@@ -24,17 +24,17 @@ public class Carte extends JComponent{
         this.couleur = couleur;
     }
 
+    public String getValeur() {
+        return valeur;
+    }
+
+    public String getCouleur() {
+        return couleur;
+    }
+
     @Override
     public String toString() {
         return valeur + " ==> " + couleur;
     }
     
-   /* public Graphics2D drawCard(Carte c){
-        Graphics2D g = null;
-        g.drawRect(5, 5, 100, 100);
-        g.setColor(Color.white);
-        //int d = SystemColor.ACTIVE_CAPTION;
-        g.fillRect(7, 7, 100, 100);
-        return g;
-    }*/
 }

@@ -15,38 +15,34 @@ import java.awt.event.MouseListener;
  *
  * @author Pc
  */
-public class ControleurPiocheVersPaquet implements MouseListener{
-    private VuePaquet paquet;
+public class ControleurPiocheVersPaquet implements MouseListener {
+
+    private VuePaquet vuepaquet;
     private VuePaquet paquetDestation;
-    private Carte carte;
+
+    //private Carte carte;
     public ControleurPiocheVersPaquet(VuePaquet vuePaquet, VuePaquet paquetDestation) {
-       if(vuePaquet.getP().getListeCarte().contains(this.carte))
-       {
-           paquetDestation.getP().addCardDebut(vuePaquet.getP().getListeCarte().get(0));
-           vuePaquet.getP().getListeCarte().remove(vuePaquet.getP().getListeCarte().get(0));
-       }           
+        this.vuepaquet = vuePaquet;
+        this.paquetDestation = paquetDestation;
+        
     }
-  
-    
+
     public void mouseClicked(MouseEvent e) {
-         this.carte = (Carte)e.getSource();
+        paquetDestation.getP().addCardDebut(vuepaquet.getP().getListeCarte().get(0));
+        vuepaquet.getP().getListeCarte().remove(vuepaquet.getP().getListeCarte().get(0));
+
     }
 
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
 }

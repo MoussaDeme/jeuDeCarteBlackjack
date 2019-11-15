@@ -27,14 +27,14 @@ public class PaquetFactory {
             }else{
                 for(int i=5; i<valeur.length; i++){
                     for(int j=0; j<couleur.length; j++){
-                      paquet.addCardFin(new Carte(valeur[i], couleur[j]));   
-                    }
+                       paquet.addCardFin(new Carte(valeur[i], couleur[j]));
+                     }
                 }
             }
             return paquet;
         }else{
             /**
-             * Pour un paquet initialement vide (la main du joueur par exemple)
+             * Pour une main initialement vide
              */
             return new Paquet(); 
         }
