@@ -13,7 +13,7 @@ import java.util.List;
  * @author Pc
  */
 public class PaquetFactory {
-    private static String[] valeur ={"2", "3", "4", "5", "6", "7", "8", "9", "10", "VALET", "DAME", "ROI", "AS"};
+    private static String[] valeur ={"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "AS"};
     private static String[] couleur ={"PIQUE", "COEUR", "CARREAU", "TREFLE"};
     public static Paquet createPaquet(int taille){
         if((taille==32) || (taille == 52)){

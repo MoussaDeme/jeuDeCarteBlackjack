@@ -5,6 +5,8 @@
  */
 package blackjack;
 
+import Vue.GUIBJ;
+
 
 
 /**
@@ -16,6 +18,7 @@ public class MainClass {
     {
         //Carte c5 = new Carte("blackJack", "pique");
         //System.out.println(c5.toString());
+        GUIBJ vue= new GUIBJ();
         
     }
 }

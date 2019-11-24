@@ -43,8 +43,9 @@ public class VuePaquetVisible extends VuePaquet {
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2D = (Graphics2D) g;
-         super.paintComponent(g);
+        super.paintComponent(g);
         int k = 10;
+
         for (int i = 0; i < this.p.getListeCarte().size(); i++) {
             
             g2D.setColor(Color.white);

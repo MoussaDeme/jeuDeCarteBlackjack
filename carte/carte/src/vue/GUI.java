@@ -16,34 +16,34 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
  
 
-/**
+/*
  *
  * @author Pc
  */
 public class GUI extends JFrame implements /*EcouteurPaquet,*/ MouseListener {
 
         
-    public GUI() {
+    public GUI(){
         
-        final VuePaquetVisible mainJoueur = new VuePaquetVisible(PaquetFactory.createPaquet(0));
-        final VuePaquet pioche = new VuePaquetCache(PaquetFactory.createPaquet(52));
-        final VuePaquet defausse = new VuePaquetVisible(PaquetFactory.createPaquet(0));
-        pioche.getP().melanger();
+        final VuePaquetVisible vueMainJoueur = new VuePaquetVisible(PaquetFactory.createPaquet(0));
+        final VuePaquet vuePioche = new VuePaquetCache(PaquetFactory.createPaquet(52));
+        final VuePaquet vueDefausse = new VuePaquetVisible(PaquetFactory.createPaquet(0));
+        vuePioche.getP().melanger();
         Container cp = this.getContentPane();
 
-        new ControleurVuePaquetVisibleVersPaquet(mainJoueur,defausse.getP());
+        new ControleurVuePaquetVisibleVersPaquet(vueMainJoueur,vueDefausse.getP());
         
         cp.setLayout(new BorderLayout());
         
-        final  ControleurPiocheVersPaquet piochePaquet = new ControleurPiocheVersPaquet(pioche, mainJoueur);
-        pioche.addMouseListener(new MouseListener() {
+        final  ControleurPiocheVersPaquet piochePaquet = new ControleurPiocheVersPaquet(vuePioche, vueMainJoueur);
+        vuePioche.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
                if((e.getX()<150) && (e.getY()<200)){
                
-                piochePaquet.mouseClicked(e);
+               piochePaquet.mouseClicked(e);
               //System.out.println(pioche.getP().getListeCarte().size());
-               //System.out.println(mainJoueur.getP().getListeCarte().size());
-              pioche.paquetMiseAJour(pioche.getP());
+              //System.out.println(mainJoueur.getP().getListeCarte().size());
+              vuePioche.paquetMiseAJour(vuePioche.getP());
                }
                
             }
@@ -60,7 +60,7 @@ public class GUI extends JFrame implements /*EcouteurPaquet,*/ MouseListener {
             public void mouseExited(MouseEvent e) {
             }
         });
-        mainJoueur.addMouseListener(new MouseListener() {
+        vueMainJoueur.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
               /*  if(mainJoueur.getSelectedCard() !=-1)
                 {
@@ -68,9 +68,9 @@ public class GUI extends JFrame implements /*EcouteurPaquet,*/ MouseListener {
                 }*/
                //ControleurChoixCarteVersPaquet
                 //mainDefausse.mouseClicked(e);
-                System.out.println(defausse.getP().getListeCarte().size());
-                System.out.println(mainJoueur.getP().getListeCarte().size());
-                mainJoueur.paquetMiseAJour(mainJoueur.getP());
+                System.out.println(vueDefausse.getP().getListeCarte().size());
+                System.out.println(vueMainJoueur.getP().getListeCarte().size());
+                vueMainJoueur.paquetMiseAJour(vueMainJoueur.getP());
             
                 }
 
@@ -96,10 +96,10 @@ public class GUI extends JFrame implements /*EcouteurPaquet,*/ MouseListener {
          */
         
         //dimensionner borderLayout Center
-        cp.add(mainJoueur,BorderLayout.CENTER);
+        cp.add(vueMainJoueur,BorderLayout.CENTER);
         
-        pioche.setPreferredSize( new Dimension(400,200));
-        cp.add(pioche,BorderLayout.PAGE_START);
+        vuePioche.setPreferredSize( new Dimension(400,200));
+        cp.add(vuePioche,BorderLayout.PAGE_START);
         
         this.setSize(800, 500);
         this.setLocation(100, 100);

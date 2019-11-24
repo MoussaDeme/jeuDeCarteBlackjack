@@ -34,7 +34,7 @@ public class VuePaquetCache extends VuePaquet{
     public void paintComponent(Graphics g) {
         Graphics2D g2D = (Graphics2D) g;
         super.paintComponent(g);
-
+        
         for (int i = 0; i < p.getListeCarte().size(); i++) {   
            g2D.drawRoundRect((int)rec.getX()+i, (int)rec.getY()+i, (int)rec.getWidth(), (int)rec.getHeight(),10, 10);
            if(i<p.getListeCarte().size()-1){
