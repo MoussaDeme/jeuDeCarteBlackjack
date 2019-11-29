@@ -26,9 +26,12 @@ public abstract class Joueur {
         this.mainJoueur = PaquetFactory.createPaquet(0);
         this.poids = 0;
         this.mise = mise;
+        this.nom = nom;
     }
     
-    
+    public String getNomJoueur(){
+        return this.nom;
+    }
     public int getPoids() {
         return poids;
     }
@@ -41,23 +44,22 @@ public abstract class Joueur {
         this.mainJoueur = mainJoueur;
     }
 
-    public int nombrePoint() {
-
+    public void nombrePoint() {
+        this.poids = 0; 
         for (Carte carte : this.mainJoueur.getListeCarte()) {
             int poidsCarte = Integer.parseInt(carte.getValeur());
             if (poidsCarte > 1 && poidsCarte <= 9) {// poids réel d'une carte (numero)
                 this.poids += poidsCarte;
             } else if (carte.getValeur().equalsIgnoreCase("AS")) {
                 if(this.poids +11 <=21){
-                    this.poids+=11;
+                    this.poids +=11;
                 }else{
-                this.poids+=1;
+                this.poids +=1;
                 }
             } else {
                 this.poids += 10;
             }
         }
-        return this.poids;
     }
 
     public void doublerSaMise(boolean c)
@@ -66,11 +68,5 @@ public abstract class Joueur {
         this.mise*=2;
         }
     }
-    
-    /*public boolean passerSonTour()
-    {
-      // tu ne fais rien pour l'instant 
-    }*/
 
-            
 }

@@ -49,8 +49,7 @@ public class VuePaquetVisible extends VuePaquet {
         for (int i = 0; i < this.p.getListeCarte().size(); i++) {
             
             g2D.setColor(Color.white);
-            g2D.fillRoundRect((int) rec.getX() + k, (int) rec.getY() +50, (int) rec.getWidth(), (int) rec.getHeight(), 10, 10);
-            System.out.println("i="+i+" boolean="+(i== selectedCard ));
+            g2D.fillRoundRect((int) rec.getX() + k, (int) rec.getY() +50, (int) rec.getWidth(), (int) rec.getHeight(), 10, 10);;
             g2D.setColor(i== selectedCard ? Color.GREEN : Color.black);
             g2D.drawRoundRect((int) rec.getX()+k,(int) rec.getY()+50, (int) rec.getWidth(), (int) rec.getHeight(), 10, 10);
             g2D.drawString(p.getListeCarte().get(i).getValeur(), (int) rec.getX() +k+7, (int) rec.getY() + 70);

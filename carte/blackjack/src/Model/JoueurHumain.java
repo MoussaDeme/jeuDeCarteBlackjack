@@ -15,5 +15,7 @@ public class JoueurHumain extends Joueur{
         
         super(nom, mise);
     }
+    
+    
  
 }

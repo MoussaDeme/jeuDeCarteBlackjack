@@ -38,10 +38,6 @@ public class Croupier extends Joueur {
         }
         this.joueurCourant=listPlayer.get(indexJoueurCourant);
     }
-    
-    public boolean demanderCarte(){
-    return true;
-    }
 
     public List<Joueur> getListPlayer() {
     return this.listPlayer;
@@ -49,5 +45,9 @@ public class Croupier extends Joueur {
 
     public TablePioche getTable() {
         return this.table;
+    }
+    
+    public Joueur getJoueurCourant(){
+        return this.joueurCourant;
     }
 }

@@ -16,7 +16,7 @@ import model.Carte;
  */
 public class Robots extends Joueur{
         private List<Carte> listCarte;
-        private boolean tab[]={true, false};
+        
 
     public Robots(String nom, double mise) {
         super(nom, mise);
@@ -28,10 +28,23 @@ public class Robots extends Joueur{
         }
 
     public boolean demanderCarte(){
+       /*if(this.getPoids()>=15){
+           if(this.getPoids()>=21){
+             return false;           
+           }else{
+                Random ran = new Random();
+                return ran.nextBoolean();
+           }
+           */
        if(this.getPoids()>=15){
-        Random ran = new Random();
-        return ran.nextBoolean();//soit le robot demande une carte ou passe son tour aleatoirement quand il s'approche de 21 
-        }else{
+           if(this.getPoids()>=21){
+               return false;
+           }else{
+                 Random ran = new Random();
+                return ran.nextBoolean();
+           }
+           }
+           else{
            return true;
        }
     }

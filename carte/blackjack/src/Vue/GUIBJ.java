@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import model.PaquetFactory;
 
 /**
@@ -31,25 +32,27 @@ public class GUIBJ extends JFrame {
     public GUIBJ() {
 
         final Joueur humain = new JoueurHumain("HAMID", 30);
-        Joueur robot = new Robots("Rachid", 30);
-        List<Joueur> listJoueurs = new ArrayList();
+        Joueur robot = new Robots("Rachid Robot", 30);
+        List<Joueur> listJoueurs = new ArrayList<Joueur>();
         listJoueurs.add(humain);
         listJoueurs.add(robot);
         final TablePioche tablePioche = new TablePioche(PaquetFactory.createPaquet(52));
         tablePioche.getPioche().melanger();
-        Croupier croupier = new Croupier("BlackJack", 0, listJoueurs, tablePioche);
-
+        final Croupier croupier = new Croupier("BlackJack", 0, listJoueurs, tablePioche);
+         
         VueTablePioche vuePioche = new VueTablePioche(tablePioche.getPioche());
         VueJoueur vueMainJoueur = new VueJoueur(humain.getMainJoueur());
         VueJoueur vueRobot = new VueJoueur(robot.getMainJoueur());
+        VueJoueur vueCroupier = new VueJoueur(croupier.getMainJoueur());
 
         final ControleurPiocheJoueur distribuer = new ControleurPiocheJoueur(croupier);
-
+ 
         final JButton buttonCommence = new JButton("commencer");
         buttonCommence.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+               
                 distribuer.distribuerInit();
-                buttonCommence.setEnabled(true);
+                buttonCommence.setEnabled(false);
             }
         });
 
@@ -58,20 +61,40 @@ public class GUIBJ extends JFrame {
         buttonDemanderCarte.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 distribuer.donnerCarte(humain.getMainJoueur());
-               
-                    System.out.println(tablePioche.getPioche().getListeCarte().size());
             }
         });
+        
+        final JButton buttonTerminer = new JButton("passer son tour ");
 
+        buttonTerminer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                distribuer.getCroupier().donnerTour();
+                buttonDemanderCarte.setEnabled(false);
+                buttonTerminer.setEnabled(false);
+                System.out.println(croupier.getJoueurCourant().getNomJoueur());
+                distribuer.gestionRobots();               
+            }
+        });
+        System.out.println(croupier.getJoueurCourant().getNomJoueur());
+        if(croupier.getJoueurCourant()!=humain){
+            buttonDemanderCarte.setEnabled(false);
+            buttonTerminer.setEnabled(false);
+            distribuer.gestionRobots();
+            
+        }
+        
         Container cp = this.getContentPane();
         cp.setLayout(new GridLayout(5, 1));
+        
         cp.add(vuePioche);
         cp.add(buttonDemanderCarte);
         cp.add(vueMainJoueur);
         cp.add(vueRobot);
+        cp.add(vueCroupier);
         cp.add(buttonCommence);
-        //vuePioche.setBackground(Color.green);
-
+        cp.add(buttonTerminer);
+        
+        
         this.setSize(700, 700);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
