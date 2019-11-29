@@ -9,6 +9,7 @@ import Controlleur.ControleurPiocheJoueur;
 import Model.Croupier;
 import Model.Joueur;
 import Model.JoueurHumain;
+import Model.Regles;
 import Model.Robots;
 import Model.TablePioche;
 import java.awt.Color;
@@ -39,7 +40,9 @@ public class GUIBJ extends JFrame {
         final TablePioche tablePioche = new TablePioche(PaquetFactory.createPaquet(52));
         tablePioche.getPioche().melanger();
         final Croupier croupier = new Croupier("BlackJack", 0, listJoueurs, tablePioche);
-         
+        
+        Regles regles = new Regles(croupier);
+        
         VueTablePioche vuePioche = new VueTablePioche(tablePioche.getPioche());
         VueJoueur vueMainJoueur = new VueJoueur(humain.getMainJoueur());
         VueJoueur vueRobot = new VueJoueur(robot.getMainJoueur());
