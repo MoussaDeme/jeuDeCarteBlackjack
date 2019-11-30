@@ -14,38 +14,28 @@ import model.Carte;
  *
  * @author deme
  */
-public class Robots extends Joueur{
-        private List<Carte> listCarte;
-        
+public class Robots extends Joueur {
+
+    private List<Carte> listCarte;
 
     public Robots(String nom, double mise) {
         super(nom, mise);
     }
-        
-        public void jouerUneCarte()
-        {
-           
-        }
 
-    public boolean demanderCarte(){
-       /*if(this.getPoids()>=15){
-           if(this.getPoids()>=21){
-             return false;           
-           }else{
+    public void jouerUneCarte() {
+
+    }
+
+    public boolean demanderCarte() {
+        if (this.getPoids() >= 12) {
+            if (this.getPoids() >= 21) {
+                return false;
+            } else {
                 Random ran = new Random();
                 return ran.nextBoolean();
-           }
-           */
-       if(this.getPoids()>=15){
-           if(this.getPoids()>=21){
-               return false;
-           }else{
-                 Random ran = new Random();
-                return ran.nextBoolean();
-           }
-           }
-           else{
-           return true;
-       }
+            }
+        } else {
+            return true;
+        }
     }
 }

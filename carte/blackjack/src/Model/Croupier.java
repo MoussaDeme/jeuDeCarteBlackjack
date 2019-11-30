@@ -36,7 +36,9 @@ public class Croupier extends Joueur {
         else{
             indexJoueurCourant++;
         }
+        if(!this.listPlayer.isEmpty()){
         this.joueurCourant=listPlayer.get(indexJoueurCourant);
+        }
     }
 
     public List<Joueur> getListPlayer() {

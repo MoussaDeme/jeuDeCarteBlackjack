@@ -36,6 +36,13 @@ public abstract class Joueur {
         return poids;
     }
 
+    public void setMise(double gaint){
+        this.mise=gaint;
+    }
+    
+    public double getMise(){
+        return this.mise;
+    }
     public Paquet getMainJoueur() {
         return mainJoueur;
     }
@@ -47,11 +54,13 @@ public abstract class Joueur {
     public void nombrePoint() {
         this.poids = 0; 
         for (Carte carte : this.mainJoueur.getListeCarte()) {
-            int poidsCarte = Integer.parseInt(carte.getValeur());
-            if (poidsCarte > 1 && poidsCarte <= 9) {// poids réel d'une carte (numero)
-                this.poids += poidsCarte;
-            } else if (carte.getValeur().equalsIgnoreCase("AS")) {
-                if(this.poids +11 <=21){
+            if(!carte.getValeur().equalsIgnoreCase("AS") && !carte.getValeur().equalsIgnoreCase("J") && !carte.getValeur().equalsIgnoreCase("K") 
+                    && !carte.getValeur().equalsIgnoreCase("Q")){
+                int poidsCarte = Integer.parseInt(carte.getValeur());
+                 this.poids += poidsCarte;
+            }else if(carte.getValeur().equalsIgnoreCase("AS")) {
+                int a = this.poids +11;
+                if(a <=21){
                     this.poids +=11;
                 }else{
                 this.poids +=1;

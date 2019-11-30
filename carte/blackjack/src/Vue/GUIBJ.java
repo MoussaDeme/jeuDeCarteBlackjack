@@ -9,7 +9,7 @@ import Controlleur.ControleurPiocheJoueur;
 import Model.Croupier;
 import Model.Joueur;
 import Model.JoueurHumain;
-import Model.Regles;
+import java.util.concurrent.TimeUnit;
 import Model.Robots;
 import Model.TablePioche;
 import java.awt.Color;
@@ -19,6 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,76 +33,105 @@ import model.PaquetFactory;
  */
 public class GUIBJ extends JFrame {
 
+    public static JButton bouttonCommencer = new JButton("commencer");
+    public static JButton buttonDemanderCarte = new JButton("demandé carte");
+    public static JButton buttonPasserTour = new JButton("passer son tour ");
+    public static Joueur humain;
+    public static TablePioche tablePioche;
+    public static Croupier croupier;
+    public static ControleurPiocheJoueur controleJeu;
+    public static Joueur robot;
+    public static Joueur robot2;
+    public static Container cp;
+
     public GUIBJ() {
 
-        final Joueur humain = new JoueurHumain("HAMID", 30);
-        Joueur robot = new Robots("Rachid Robot", 30);
+        humain = new JoueurHumain("humain", 30);
+        robot = new Robots("Robot", 30);
+        robot2 = new Robots("Robot2",10000);
         List<Joueur> listJoueurs = new ArrayList<Joueur>();
         listJoueurs.add(humain);
         listJoueurs.add(robot);
-        final TablePioche tablePioche = new TablePioche(PaquetFactory.createPaquet(52));
+        listJoueurs.add(robot2);
+        tablePioche = new TablePioche(PaquetFactory.createPaquet(52));
         tablePioche.getPioche().melanger();
-        final Croupier croupier = new Croupier("BlackJack", 0, listJoueurs, tablePioche);
-        
-        Regles regles = new Regles(croupier);
-        
+        croupier = new Croupier("BlackJack", 5000, listJoueurs, tablePioche);
+
         VueTablePioche vuePioche = new VueTablePioche(tablePioche.getPioche());
         VueJoueur vueMainJoueur = new VueJoueur(humain.getMainJoueur());
         VueJoueur vueRobot = new VueJoueur(robot.getMainJoueur());
         VueJoueur vueCroupier = new VueJoueur(croupier.getMainJoueur());
-
-        final ControleurPiocheJoueur distribuer = new ControleurPiocheJoueur(croupier);
- 
-        final JButton buttonCommence = new JButton("commencer");
-        buttonCommence.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               
-                distribuer.distribuerInit();
-                buttonCommence.setEnabled(false);
-            }
-        });
-
-        final JButton buttonDemanderCarte = new JButton("demandé carte");
-
-        buttonDemanderCarte.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                distribuer.donnerCarte(humain.getMainJoueur());
-            }
-        });
+        VueJoueur vueRobot2 = new VueJoueur(robot2.getMainJoueur());
         
-        final JButton buttonTerminer = new JButton("passer son tour ");
+        vueCroupier.add(new JLabel("Croupier"));
+        vueMainJoueur.add(new JLabel("humain"));
+        vueRobot.add(new JLabel("robot"));
+        vueRobot2.add(new JLabel("robot2"));
 
-        buttonTerminer.addActionListener(new ActionListener() {
+        controleJeu = new ControleurPiocheJoueur(croupier);
+
+        this.bouttonCommencer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                distribuer.getCroupier().donnerTour();
-                buttonDemanderCarte.setEnabled(false);
-                buttonTerminer.setEnabled(false);
-                System.out.println(croupier.getJoueurCourant().getNomJoueur());
-                distribuer.gestionRobots();               
+
+                controleJeu.distribuerInit();
+                bouttonCommencer.setEnabled(false);
             }
         });
-        System.out.println(croupier.getJoueurCourant().getNomJoueur());
-        if(croupier.getJoueurCourant()!=humain){
-            buttonDemanderCarte.setEnabled(false);
-            buttonTerminer.setEnabled(false);
-            distribuer.gestionRobots();
-            
-        }
-        
-        Container cp = this.getContentPane();
+        cp = this.getContentPane();
         cp.setLayout(new GridLayout(5, 1));
         
-        cp.add(vuePioche);
+        buttonDemanderCarte.setEnabled(true);
+        buttonPasserTour.setEnabled(true);
+        this.buttonDemanderCarte.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                controleJeu.donnerCarte(humain);
+            }
+
+        });
+
+        this.buttonPasserTour.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controleJeu.getCroupier().donnerTour();
+                //System.out.println("go to sleep");
+                
+                buttonDemanderCarte.setEnabled(false);
+                buttonPasserTour.setEnabled(false);
+                try {
+                    // System.out.println(croupier.getJoueurCourant().getNomJoueur()+":"+croupier.getJoueurCourant().getPoids());
+                   while(controleJeu.getCroupier().getJoueurCourant()!= humain){
+                    controleJeu.gestionRobots();
+              
+                   }
+                   if(controleJeu.getCroupier().getPoids()<17){
+                       controleJeu.donnerCarte(controleJeu.getCroupier());
+                   }
+                  
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GUIBJ.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                buttonDemanderCarte.setEnabled(true);
+                buttonPasserTour.setEnabled(true);
+                //controleJeu.gestionRobots();
+                
+            }
+
+        });
+        
+        
+        
+        cp.add(vueCroupier);
         cp.add(buttonDemanderCarte);
         cp.add(vueMainJoueur);
         cp.add(vueRobot);
-        cp.add(vueCroupier);
-        cp.add(buttonCommence);
-        cp.add(buttonTerminer);
+        cp.add(vueRobot2);
         
-        
-        this.setSize(700, 700);
+        //cp.add(vueCroupier);
+        cp.add(bouttonCommencer);
+        cp.add(buttonPasserTour);
+
+        this.setSize(1000, 1000);
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    }
+
 }
