@@ -9,6 +9,7 @@ import Model.Croupier;
 import Model.Joueur;
 import Model.Robots;
 import java.awt.Robot;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,11 +48,12 @@ public class ControleurPiocheJoueur {
           this.croupier.getMainJoueur().addCardDebut(this.croupier.getTable().getPioche().getListeCarte().get(0));
           this.croupier.getTable().getPioche().getListeCarte().remove(0);
           this.croupier.nombrePoint();
-        }else{
-        joueur.getMainJoueur().addCardDebut(this.croupier.getTable().getPioche().getListeCarte().get(0));
-        this.croupier.getTable().getPioche().getListeCarte().remove(0);
-        joueur.nombrePoint();
-        }
+        }else if(this.croupier.getListPlayer().contains(joueur)){
+            
+            joueur.getMainJoueur().addCardDebut(this.croupier.getTable().getPioche().getListeCarte().get(0));
+            this.croupier.getTable().getPioche().getListeCarte().remove(0);
+            joueur.nombrePoint();
+            } 
 //        //System.out.println(this.croupier.getJoueurCourant().getNomJoueur()+" : "+this.croupier.getJoueurCourant().getPoids());
     }
 
@@ -59,30 +61,27 @@ public class ControleurPiocheJoueur {
         return this.croupier;
     }
 
-    public void gestionRobots() throws InterruptedException {
+    public void gestionRobots() {
         Robots r = ((Robots) this.croupier.getJoueurCourant());
           while(r.demanderCarte()==true)
           {
-              TimeUnit.SECONDS.sleep(2);
               this.donnerCarte(r);
               this.croupier.getPoids();
+              this.attente(1);
           }
           this.croupier.donnerTour();
        this.supprimeJoueursPerdants(this.croupier.getListPlayer());
-        
-
+  
     }
     
     public boolean gameOver() {
-        if (this.croupier.getPoids() >= 17) {
+        if (this.croupier.getPoids() > 17) {
             return true;
         }
         if (this.croupier.getListPlayer().isEmpty()) {
             return true;
         }
-        if (this.croupier.getJoueurCourant().getPoids() == 21) {
-            return true;
-        }
+      
         return false;
     }
 
@@ -92,9 +91,15 @@ public class ControleurPiocheJoueur {
             if (listeJoueurs.get(i).getPoids() > 21) {
                  System.out.println("ce joueur est suprimer "+listeJoueurs.get(i).getNomJoueur()); 
                 this.operationsSurMise(listeJoueurs.get(i), croupier);
+                
                 listeJoueurs.remove(i);
             }
         }
+        
+        System.out.println("Liste ");
+       for(Joueur j: listeJoueurs){
+           System.out.println(j.getNomJoueur());
+       } 
     }
 
     public void operationsSurMise(Joueur joueurPerdant, Joueur joueurGagnant) {
@@ -133,4 +138,18 @@ public class ControleurPiocheJoueur {
         }
         return null;
     }
+    
+    public void attente(int nbreSecondes)
+	{
+		int wait = nbreSecondes*1000;
+		Date date = new Date();
+		long debut = date.getTime();
+		long somme = debut + wait;
+		
+		while(debut<somme)
+		{
+			date = new Date();
+			debut = date.getTime();
+		}
+	}
 }
