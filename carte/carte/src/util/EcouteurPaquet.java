@@ -9,6 +9,13 @@ package util;
  *
  * @author Pc
  */
+/**
+ * interface qui pour l'écouteur du modèle
+ */
 public interface EcouteurPaquet {
+    /**
+     * méthode qui met à jour un objet
+     * @param ob l'objet à mettre à jour
+     */
     public void paquetMiseAJour(Object ob);
 }

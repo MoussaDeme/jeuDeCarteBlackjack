@@ -6,10 +6,17 @@
 package util;
 
 /**
- *
- * @author Pc
+ *Une interface qui écoute le modèle
  */
 public interface PaquetEcoutable {
+    /**
+     * méthode qui ajoute un écoteur 
+     * @param e écouteur à ajouter
+     */
     public void ajoutEcouteur(EcouteurPaquet e);
+    /**
+     * méthode qui supprime un écoteur 
+     * @param e écouteur à supprimer
+     */
     public void retraitEcouteur(EcouteurPaquet e);
 }
