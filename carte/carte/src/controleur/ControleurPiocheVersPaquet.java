@@ -38,7 +38,7 @@ public class ControleurPiocheVersPaquet implements MouseListener {
 
     /**
      * Donne la première carte de la pioche au joeur puis la supprime de la pioche suite à un clique
-     * @param e 
+     * @param e l'évènement du clique
      */
     public void mouseClicked(MouseEvent e) {
         paquetDestation.getP().addCardDebut(vuepaquet.getP().getListeCarte().get(0));

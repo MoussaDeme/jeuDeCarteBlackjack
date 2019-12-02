@@ -177,7 +177,7 @@ public class GUI extends JFrame implements MouseListener {
     }
     /**
      * la fenêtre se repaint quand le modèle change
-     * @param ob 
+     * @param ob l'objet
      */
     public void paquetMiseAJour(Object ob) {
         this.repaint();

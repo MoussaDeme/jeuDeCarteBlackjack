@@ -44,7 +44,7 @@ public class ControleurVuePaquetVisibleVersPaquet implements MouseListener, Mous
     /**
      * Suite à un clique, on envoie la carte sélectionnée dans la défausse
      * puis on la supprime de la main du joueur
-     * @param e 
+     * @param e l'évènement du clique
      */
     public void mouseClicked(MouseEvent e) {
         /**
@@ -57,7 +57,7 @@ public class ControleurVuePaquetVisibleVersPaquet implements MouseListener, Mous
     }
     /**
      * Si la souris passe sur la carte, on la colore
-     * @param e 
+     * @param e l'évènement de la souris
      */
     public void mouseMoved(MouseEvent e) {
         int selectedCard = (int) (e.getX()/(vueSource.getRect().getWidth()+7));
