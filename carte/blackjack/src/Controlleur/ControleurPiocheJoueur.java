@@ -54,7 +54,6 @@ public class ControleurPiocheJoueur {
             this.croupier.getTable().getPioche().getListeCarte().remove(0);
             joueur.nombrePoint();
             } 
-//        //System.out.println(this.croupier.getJoueurCourant().getNomJoueur()+" : "+this.croupier.getJoueurCourant().getPoids());
     }
 
     public Croupier getCroupier() {
@@ -63,25 +62,19 @@ public class ControleurPiocheJoueur {
 
     public void gestionRobots() {
         Robots r = ((Robots) this.croupier.getJoueurCourant());
+        this.supprimeJoueursPerdants(this.croupier.getListPlayer());
           while(r.demanderCarte()==true)
           {
               this.donnerCarte(r);
-              this.croupier.getPoids();
-              this.attente(1);
+                        
           }
           this.croupier.donnerTour();
-       this.supprimeJoueursPerdants(this.croupier.getListPlayer());
-  
     }
     
     public boolean gameOver() {
-        if (this.croupier.getPoids() > 17) {
+        if(this.croupier.getPoids() > 17 || this.croupier.getListPlayer().isEmpty() ) {
             return true;
         }
-        if (this.croupier.getListPlayer().isEmpty()) {
-            return true;
-        }
-      
         return false;
     }
 
@@ -89,17 +82,11 @@ public class ControleurPiocheJoueur {
 
         for (int i = 0; i < listeJoueurs.size(); i++) {
             if (listeJoueurs.get(i).getPoids() > 21) {
-                 System.out.println("ce joueur est suprimer "+listeJoueurs.get(i).getNomJoueur()); 
                 this.operationsSurMise(listeJoueurs.get(i), croupier);
                 
                 listeJoueurs.remove(i);
             }
         }
-        
-        System.out.println("Liste ");
-       for(Joueur j: listeJoueurs){
-           System.out.println(j.getNomJoueur());
-       } 
     }
 
     public void operationsSurMise(Joueur joueurPerdant, Joueur joueurGagnant) {
@@ -113,7 +100,7 @@ public class ControleurPiocheJoueur {
         }
     }
 
-    public Set<Joueur> gagnant() {
+    public Set<Joueur> gagnants() {
         Set<Joueur> listeGagnants = new HashSet<Joueur>();
 
         if (this.gameOver() == true) {
@@ -133,6 +120,9 @@ public class ControleurPiocheJoueur {
                         this.operationsSurMise(j, this.croupier);
                     }
                 }
+            }
+            if(listeGagnants.isEmpty() && this.croupier.getPoids()<21){
+                listeGagnants.add(this.croupier);
             }
             return listeGagnants;
         }

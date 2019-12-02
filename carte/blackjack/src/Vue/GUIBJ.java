@@ -40,102 +40,124 @@ import model.PaquetFactory;
  */
 public class GUIBJ extends JFrame {
 
-    public static JButton bouttonCommencer = new JButton("commencer");
-    public static JButton buttonDemanderCarte = new JButton("demandé carte");
-    public static JButton buttonPasserTour = new JButton("passer son tour ");
-    public static Joueur humain;
-    public static TablePioche tablePioche;
-    public static Croupier croupier;
-    public static ControleurPiocheJoueur controleJeu;
-    public static Joueur robot;
-    public static Joueur robot2;
-    public static Container cp;
-    public static JOptionPane message;
-    public static Set<Joueur> listeGagnants;
+    private static JButton boutonCommencer = new JButton("commencer");
+    private static JButton boutonDemanderCarte = new JButton("demandé une carte");
+    private static JButton boutonPasserTour = new JButton("passer son tour ");
+    private static JButton boutonDoublerMise = new JButton("doublé la mise");
+    private static Joueur humain;
+    private static TablePioche tablePioche;
+    private static Croupier croupier;
+    private static ControleurPiocheJoueur controleJeu;
+    private static Joueur robot;
+    private static Joueur robot2;
+    private static Container cp;
+    private static JOptionPane message;
+    private static Set<Joueur> listeGagnants;
+    private static JLabel jMise;
 
     public GUIBJ() {
 
-        humain = new JoueurHumain("humain", 30);
-        robot = new Robots("Robot", 10);
-        robot2 = new Robots("Robot2", 50);
+        humain = new JoueurHumain("Humain", 30);
+        robot = new Robots("Joueur1", 10);
+        robot2 = new Robots("Joueur2", 50);
         List<Joueur> listJoueurs = new ArrayList<Joueur>();
         listJoueurs.add(humain);
         listJoueurs.add(robot);
         listJoueurs.add(robot2);
         tablePioche = new TablePioche(PaquetFactory.createPaquet(52));
         tablePioche.getPioche().melanger();
-        croupier = new Croupier("BlackJack", 5000, listJoueurs, tablePioche);
-
+        croupier = new Croupier("Croupier", 5000, listJoueurs, tablePioche);
+        controleJeu = new ControleurPiocheJoueur(croupier);
+        
         VueTablePioche vuePioche = new VueTablePioche(tablePioche.getPioche());
         VueJoueur vueMainJoueur = new VueJoueur(humain.getMainJoueur());
         VueJoueur vueRobot = new VueJoueur(robot.getMainJoueur());
         VueJoueur vueCroupier = new VueJoueur(croupier.getMainJoueur());
         VueJoueur vueRobot2 = new VueJoueur(robot2.getMainJoueur());
-
+        
+        jMise = new JLabel("Humain, "+" Mise : "+controleJeu.getCroupier().getListPlayer().get(0).getMise());
+        
         vueCroupier.add(new JLabel("Croupier"));
-        vueMainJoueur.add(new JLabel("humain, "+" Mise : "+humain.getMise()));
-        vueRobot.add(new JLabel("robot 1, "+" Mise : "+robot.getMise()));
-        vueRobot2.add(new JLabel("robot 2, "+" Mise : "+robot2.getMise()));
+        vueMainJoueur.add(jMise);
+        vueRobot.add(new JLabel("Joueur1, "+" Mise : "+robot.getMise()));
+        vueRobot2.add(new JLabel("Joueur2, "+" Mise : "+robot2.getMise()));
 
-        controleJeu = new ControleurPiocheJoueur(croupier);
-
-        this.bouttonCommencer.addActionListener(new ActionListener() {
+        boutonDemanderCarte.setEnabled(false);
+        boutonPasserTour.setEnabled(false);
+        
+        boutonCommencer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 controleJeu.distribuerInit();
-                bouttonCommencer.setEnabled(false);
+                boutonCommencer.setEnabled(false);
+                boutonDoublerMise.setEnabled(true);
+                boutonDemanderCarte.setEnabled(true);
+                boutonPasserTour.setEnabled(true);
             }
         });
+        
         cp = this.getContentPane();
-        cp.setLayout(new GridLayout(0, 1,0,5));
+        cp.setLayout(new GridLayout(0,1,0,5));
 
-        buttonDemanderCarte.setEnabled(true);
-        buttonPasserTour.setEnabled(true);
-        this.buttonDemanderCarte.addActionListener(new ActionListener() {
+        
+        boutonDemanderCarte.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 controleJeu.supprimeJoueursPerdants(controleJeu.getCroupier().getListPlayer());
                 controleJeu.donnerCarte(humain);
+                
+                boutonDoublerMise.setEnabled(false);
+                
             }
 
         });
-
-        this.buttonPasserTour.addActionListener(new ActionListener() {
+        
+        boutonDoublerMise.setEnabled(false);
+        boutonDoublerMise.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                if(controleJeu.getCroupier().getJoueurCourant()instanceof JoueurHumain){
+                    controleJeu.getCroupier().getListPlayer().get(0).doublerSaMise();
+                    jMise.setText("humain, "+" Mise : "+controleJeu.getCroupier().getListPlayer().get(0).getMise());
+                    boutonDoublerMise.setEnabled(false);
+                    boutonDemanderCarte.setEnabled(false);
+                }
+            }
+        });
+            boutonPasserTour.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controleJeu.getCroupier().donnerTour();
-                //System.out.println("go to sleep");
 
-                buttonDemanderCarte.setEnabled(false);
-                buttonPasserTour.setEnabled(false);
+                boutonDemanderCarte.setEnabled(false);
+                boutonPasserTour.setEnabled(false);
 
-                // System.out.println(croupier.getJoueurCourant().getNomJoueur()+":"+croupier.getJoueurCourant().getPoids());
-                while (controleJeu.getCroupier().getJoueurCourant() != humain && controleJeu.gameOver() == false) {
-                    controleJeu.gestionRobots();
-                }
-                if (controleJeu.gameOver() == false) {
+                while (controleJeu.getCroupier().getJoueurCourant() != humain && controleJeu.gameOver() == false){
 
-                    if (controleJeu.getCroupier().getPoids() < 17) {
+                     if (controleJeu.getCroupier().getPoids() < 17){
                         controleJeu.donnerCarte(controleJeu.getCroupier());
                     }
-
-                    buttonDemanderCarte.setEnabled(true);
-                    buttonPasserTour.setEnabled(true);
-                    //controleJeu.gestionRobots();
-                } else {
-                    listeGagnants = new HashSet<Joueur>(controleJeu.gagnant());
-                    System.out.println("Gagnants :");
-                    String chaine ="";
-                    for(Joueur j: listeGagnants){
-                        System.out.println(j.getNomJoueur());
-                        chaine+=j.getNomJoueur()+"  ---------  ";
-                    }
-                    System.out.println("");
-                    JOptionPane.showMessageDialog(cp, chaine, "Game Over", JOptionPane.INFORMATION_MESSAGE);
-
                 }
+                if (controleJeu.gameOver() == false) {
+                    /*
+                    if (controleJeu.getCroupier().getPoids() < 17){
+                        controleJeu.donnerCarte(controleJeu.getCroupier());
+                    }*/
+                    boutonDemanderCarte.setEnabled(true);
+                    boutonPasserTour.setEnabled(true);
+                    } else{
+                        listeGagnants = new HashSet<Joueur>(controleJeu.gagnants());
 
+                        String chaine ="le(s) gagnant(s):";
+                        for(Joueur j: listeGagnants){
+                            if(j instanceof Croupier){
+                                chaine+="\n"+j.getNomJoueur()+" CAISSE :"+j.getMise()+"\n";
+                            }else{
+                                chaine+="\n"+j.getNomJoueur()+"  Gain :"+j.getMise()/2+"\n";
+                            }
+                        }
+                    JOptionPane.showMessageDialog(cp, chaine, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                   
+                }
             }
-
         });
 
         cp.add(vueCroupier);
@@ -143,23 +165,24 @@ public class GUIBJ extends JFrame {
         cp.add(vueRobot2);
         
         Dimension d =new Dimension(50, 30);
-        buttonDemanderCarte.setSize(d);
-        bouttonCommencer.setSize(d);
-        buttonPasserTour.setSize(d);
+        boutonDemanderCarte.setSize(d);
+        boutonCommencer.setSize(d);
+        boutonPasserTour.setSize(d);
         
         //BorderLayout blayout = new BorderLayout();
-        JPanel pan1 = new JPanel(new GridLayout(0,3,5,0));
-        pan1.add(buttonDemanderCarte );
-        pan1.add(bouttonCommencer);
-        pan1.add(buttonPasserTour);
+        JPanel pan1 = new JPanel(new GridLayout(0,4,5,0));
+        pan1.add(boutonDemanderCarte );
+        pan1.add(boutonCommencer);
+        pan1.add(boutonPasserTour);
+        pan1.add(boutonDoublerMise);
         
-       vueMainJoueur.setBackground(Color.pink);
+        vueMainJoueur.setBackground(Color.pink);
         cp.add(vueMainJoueur);
         cp.add(pan1);
 
         this.setSize(1000, 700);
         this.setVisible(true);
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

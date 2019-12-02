@@ -16,8 +16,6 @@ import model.Carte;
  */
 public class Robots extends Joueur {
 
-    private List<Carte> listCarte;
-
     public Robots(String nom, double mise) {
         super(nom, mise);
     }

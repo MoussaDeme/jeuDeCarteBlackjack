@@ -71,11 +71,9 @@ public abstract class Joueur {
         }
     }
 
-    public void doublerSaMise(boolean c)
+    public void doublerSaMise()
     {
-        if(c){
         this.mise*=2;
-        }
     }
 
 }
