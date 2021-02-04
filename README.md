@@ -1,4 +1,5 @@
 
+JEU DE  CARTES BLACKJACK
 
 Pour mettre en pratique les connaissances acquises de ce module on a implémenté dans le
 projet certains patterns : Modèle-Vue-Contrôleur(MVC), le Pattern Observer et le pattern
